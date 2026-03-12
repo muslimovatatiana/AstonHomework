@@ -1,0 +1,22 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+
+# Compiled class files
+*.class
+
+# Package Files
+*.jar
+*.war
+*.ear
+
+# Logs and temporary files
+*.log
+hs_err_pid*
+
+# Maven build directory
+target/
+
+# Gradle build directories
+.gradle/
+build/
