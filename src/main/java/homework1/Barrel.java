@@ -8,7 +8,7 @@ import java.util.List;
  * */
 public final class Barrel {
     private final List<Material> storedMaterial;
-    private final Double volume;
+    private final double volume;
     private final String materialOfManufacture;
 
     public Barrel(double volume, List<Material> storedMaterial, String materialOfManufacture) {
@@ -19,7 +19,7 @@ public final class Barrel {
                 .toList();
     }
 
-    public Double getVolume() {
+    public double getVolume() {
         return volume;
     }
 
