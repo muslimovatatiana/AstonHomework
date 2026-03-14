@@ -4,11 +4,19 @@ import java.util.List;
 
 /**
  * Класс Бочка
- * Объем, Материал из которого изготовлена, Хранимые материалы (текущий хранимый материал - последний в списке)
- * */
+ */
 public final class Barrel {
+    /**
+    * Хранимые материалы (текущий хранимый материал - последний в списке)
+    */
     private final List<Material> storedMaterial;
+    /**
+    * Объем бочки в литрах
+    */
     private final double volume;
+    /**
+     * Материал из которого изготовлена бочка
+     */
     private final String materialOfManufacture;
 
     public Barrel(double volume, List<Material> storedMaterial, String materialOfManufacture) {

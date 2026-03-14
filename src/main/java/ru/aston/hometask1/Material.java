@@ -2,10 +2,15 @@ package ru.aston.hometask1;
 
 /**
  * Класс Хранимый материал
- * Наименование, агрегатное состояние (жидкое, сыпучее)
- * */
+ */
 public class Material {
+    /**
+    * Наименование материала, хранимого в бочке
+    */
     private final String name;
+    /**
+     * Агрегатное состояние (жидкое, сыпучее)
+     */
     private final String stateOfAggregation;
 
     public Material(String name, String stateOfAggregation) {
