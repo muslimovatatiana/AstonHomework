@@ -8,7 +8,7 @@ import java.util.List;
  * Barrel - неизменяемый класс, поэтому после создания объекта,
  * изменения списка хранимых материалов не затрагивают данные в объекте Barrel
  * */
-public class Test {
+public class BarrelDemo {
     public static void main(String[] args) {
         List<Material> materials = new ArrayList<>();
         materials.add(new Material("vine", "liquid"));
