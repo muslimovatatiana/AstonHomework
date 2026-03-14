@@ -16,7 +16,6 @@ public class Test {
         materials.add(new Material("wheat", "loose"));
 
         Barrel barrel = new Barrel(100, materials, "wood");
-        //barrel.getStoredMaterial().add(new Material("buckwheat", "loose")); //проверка на выбрасывание исключения java.lang.UnsupportedOperationException
 
         materials.add(new Material("beer", "liquid")); //добавили в список материал, в данных по бочке ничего не должно меняться
 
