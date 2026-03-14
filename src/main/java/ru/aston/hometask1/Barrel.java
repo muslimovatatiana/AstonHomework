@@ -1,6 +1,8 @@
 package ru.aston.hometask1;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Класс Бочка
@@ -22,7 +24,7 @@ public final class Barrel {
     public Barrel(double volume, List<Material> storedMaterial, String materialOfManufacture) {
         this.volume = volume;
         this.materialOfManufacture = materialOfManufacture;
-        this.storedMaterial = storedMaterial.stream()
+        this.storedMaterial = Stream.ofNullable(storedMaterial).flatMap(Collection::stream)
                 .map(Material::new)
                 .toList();
     }
