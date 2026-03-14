@@ -24,7 +24,8 @@ public final class Barrel {
     public Barrel(double volume, List<Material> storedMaterial, String materialOfManufacture) {
         this.volume = volume;
         this.materialOfManufacture = materialOfManufacture;
-        this.storedMaterial = Stream.ofNullable(storedMaterial).flatMap(Collection::stream)
+        this.storedMaterial = Stream.ofNullable(storedMaterial)
+                .flatMap(Collection::stream)
                 .map(Material::new)
                 .toList();
     }
