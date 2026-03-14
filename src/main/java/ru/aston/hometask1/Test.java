@@ -1,4 +1,4 @@
-package homework1;
+package ru.aston.hometask1;
 
 import java.util.ArrayList;
 import java.util.List;

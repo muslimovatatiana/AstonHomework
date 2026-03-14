@@ -1,4 +1,4 @@
-package homework1;
+package ru.aston.hometask1;
 
 /**
  * Класс Хранимый материал
