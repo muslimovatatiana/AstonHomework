@@ -9,11 +9,6 @@ public class StoredMaterial {
         this.stateOfAggregation = stateOfAggregation;
     }
 
-    public StoredMaterial(StoredMaterial other) {
-        this.name = other.name;
-        this.stateOfAggregation = other.getStateOfAggregation();
-    }
-
     public String getName() {
         return name;
     }

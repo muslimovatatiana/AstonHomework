@@ -14,7 +14,7 @@ public final class Barrel {
         this.materialOfManufacture = materialOfManufacture;
         this.storedMaterial = Stream.ofNullable(storedMaterials)
                 .flatMap(Collection::stream)
-                .map(StoredMaterial::new)
+                .map((StoredMaterial material) -> new StoredMaterial(material.getName(), material.getStateOfAggregation()))
                 .toList();
     }
 
