@@ -4,41 +4,29 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Stream;
 
-/**
- * Класс Бочка
- */
 public final class Barrel {
-    /**
-    * Хранимые материалы (текущий хранимый материал - последний в списке)
-    */
-    private final List<Material> storedMaterial;
-    /**
-    * Объем бочки в литрах
-    */
-    private final double volume;
-    /**
-     * Материал из которого изготовлена бочка
-     */
+    private final List<StoredMaterial> storedMaterial;
+    private final double volumeInLiters;
     private final String materialOfManufacture;
 
-    public Barrel(double volume, List<Material> storedMaterial, String materialOfManufacture) {
-        this.volume = volume;
+    public Barrel(double volumeInLiters, List<StoredMaterial> storedMaterials, String materialOfManufacture) {
+        this.volumeInLiters = volumeInLiters;
         this.materialOfManufacture = materialOfManufacture;
-        this.storedMaterial = Stream.ofNullable(storedMaterial)
+        this.storedMaterial = Stream.ofNullable(storedMaterials)
                 .flatMap(Collection::stream)
-                .map(Material::new)
+                .map(StoredMaterial::new)
                 .toList();
     }
 
-    public double getVolume() {
-        return volume;
+    public double getVolumeInLiters() {
+        return volumeInLiters;
     }
 
     public String getMaterialOfManufacture() {
         return materialOfManufacture;
     }
 
-    public List<Material> getStoredMaterial() {
+    public List<StoredMaterial> getStoredMaterial() {
         return storedMaterial;
     }
 }
