@@ -19,12 +19,9 @@ public class StudentDemo {
                 .flatMap(List::stream)
                 .sorted()
                 .distinct()
-                .filter(book -> {
-                    Integer year = book.getYear();
-                    return year != null && year > 2000;
-                })
-                .limit(3)
                 .map(Book::getYear)
+                .filter(year -> year != null && year > 2000)
+                .limit(3)
                 .findFirst()
                 .ifPresentOrElse(
                         year -> System.out.println("Год выпуска найденной книги: " + year),
