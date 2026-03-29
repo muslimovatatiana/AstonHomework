@@ -1,6 +1,6 @@
 package ru.aston.hometask3.proxy;
 
-public class ProxyDemo {
+public class ProxyPatternDemo {
     public static void main(String[] args) {
         Database userProxy = new DatabaseProxy("USER");
         userProxy.deleteRow(101);

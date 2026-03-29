@@ -1,6 +1,6 @@
 package ru.aston.hometask3.strategy;
 
-public class NavigatorDemo {
+public class StrategyPatternDemo {
     public static void main(String[] args) {
         Navigator navigator = new Navigator();
 

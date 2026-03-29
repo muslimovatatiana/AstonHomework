@@ -1,6 +1,6 @@
 package ru.aston.hometask3.chain;
 
-public class LoggerDemo {
+public class ChainPatternDemo {
     public static void main(String[] args) {
         LogManager manager = new LogManager();
 

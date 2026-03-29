@@ -1,6 +1,6 @@
 package ru.aston.hometask3.builder;
 
-public class HouseDemo {
+public class BuilderPatternDemo {
     public static void main(String[] args) {
         House simpleHouse = new House.HouseBuilder(FoundationType.CONCRETE, WallMaterial.BRICK)
                 .build();
