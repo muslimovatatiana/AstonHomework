@@ -3,8 +3,7 @@ package ru.aston.hometask3.builder;
 public enum WallMaterial {
     BRICK("Кирпич"),
     WOOD("Дерево"),
-    CONCRETE("Бетон"),
-    GLASS("Стекло");
+    CONCRETE("Бетон");
 
     private final String name;
 
