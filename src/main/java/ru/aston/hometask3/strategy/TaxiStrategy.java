@@ -1,6 +1,4 @@
-package ru.aston.hometask3.strategy.impls;
-
-import ru.aston.hometask3.strategy.RouteStrategy;
+package ru.aston.hometask3.strategy;
 
 public class TaxiStrategy implements RouteStrategy {
     @Override

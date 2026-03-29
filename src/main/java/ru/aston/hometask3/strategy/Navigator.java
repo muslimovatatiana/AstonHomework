@@ -1,10 +1,5 @@
 package ru.aston.hometask3.strategy;
 
-import ru.aston.hometask3.strategy.impls.BicycleStrategy;
-import ru.aston.hometask3.strategy.impls.BusStrategy;
-import ru.aston.hometask3.strategy.impls.TaxiStrategy;
-import ru.aston.hometask3.strategy.impls.WalkingStrategy;
-
 import java.util.EnumMap;
 import java.util.Map;
 
