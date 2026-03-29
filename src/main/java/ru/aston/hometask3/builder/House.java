@@ -19,7 +19,7 @@ public class House {
 
     @Override
     public String toString() {
-        return String.format("Дом: [Фундамент: %s, Стены: %s, Этажей: %d, Гараж: %b, Бассейн: %b, Крыша: %s]",
+        return String.format("|Характеристики дома| Фундамент: %s, Стены: %s, Этажей: %d, Гараж: %b, Бассейн: %b, Крыша: %s",
                 foundation.getDescription(), wallMaterial.getName(), floorCount.getValue(), hasGarage, hasSwimmingPool, roofType.getDescription());
     }
 

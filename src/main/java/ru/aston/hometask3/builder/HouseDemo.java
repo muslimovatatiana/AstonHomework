@@ -5,14 +5,10 @@ public class HouseDemo {
         House simpleHouse = new House.HouseBuilder(FoundationType.CONCRETE, WallMaterial.BRICK)
                 .build();
 
-        System.out.println(simpleHouse);
-
         House myCottage = new House.HouseBuilder(FoundationType.WOODEN, WallMaterial.WOOD)
                 .setFloors(FloorCount.DUPLEX)
                 .setRoof(RoofType.GABLE)
                 .build();
-
-        System.out.println(myCottage);
 
         House mansion = new House.HouseBuilder(FoundationType.STONE, WallMaterial.CONCRETE)
                 .setFloors(FloorCount.MANSION)
@@ -21,6 +17,8 @@ public class HouseDemo {
                 .addPool()
                 .build();
 
+        System.out.println(simpleHouse);
+        System.out.println(myCottage);
         System.out.println(mansion);
     }
 }
