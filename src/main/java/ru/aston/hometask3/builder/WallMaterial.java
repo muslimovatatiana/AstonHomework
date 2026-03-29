@@ -11,7 +11,7 @@ public enum WallMaterial {
         this.name = name;
     }
 
-    public String getName() {
+    public String getDescription() {
         return name;
     }
 }
