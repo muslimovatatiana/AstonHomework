@@ -3,6 +3,7 @@ package ru.aston.hometask3;
 import ru.aston.hometask3.adapter.ModernSocket;
 import ru.aston.hometask3.adapter.OldSocket;
 import ru.aston.hometask3.adapter.SocketAdapter;
+import ru.aston.hometask3.builder.FloorCount;
 import ru.aston.hometask3.builder.House;
 import ru.aston.hometask3.builder.RoofType;
 import ru.aston.hometask3.builder.WallMaterial;
@@ -16,24 +17,28 @@ import ru.aston.hometask3.strategy.ConcreteFoundation;
 
 public class ConstructionDemo {
     public static void main(String[] args) {
-        House myHouse = new House.HouseBuilder(WallMaterial.BRICK, "ул. Московская 15")
-                .setFoundationPlan(new ConcreteFoundation())
-                .setRoof(RoofType.GABLE)
-                .addGarage()
-                .addPool()
-                .buildHouse();
+        House myHouse = House.builder()
+                .address("ул. Московская 15")
+                .floors(FloorCount.DUPLEX)
+                .foundation(new ConcreteFoundation())
+                .walls(WallMaterial.BRICK)
+                .roofType(RoofType.GABLE)
+                .hasGarage(true)
+                .hasSwimmingPool(true)
+                .isSafe(true)
+                .build();
         System.out.println(myHouse.toString());
 
         Building smartHouse = new SmartLockDecorator(new SimpleHouse());
         smartHouse.describe();
-        System.out.println();
 
         ModernSocket socket = new SocketAdapter(new OldSocket());
         socket.supplyPower();
 
-        SecuritySystem gate = new SecurityProxy("not 1234");
-        gate.unlock();
-        new SecurityProxy("1234").unlock();
+        SecuritySystem gate1 = new SecurityProxy("not 1234");
+        gate1.unlock();
+        SecuritySystem gate2 = new SecurityProxy("1234");
+        gate2.unlock();
 
         InspectionChain chain = new InspectionChain()
                 .addStep(h -> System.out.println("Инспекция по адресу: " + h.getAddress()))

@@ -20,7 +20,11 @@ public class House {
         this.roofType = builder.roofType;
         this.address = builder.address;
         this.isSafe = builder.isSafe;
-        this.foundationSpecs = builder.strategy.build();
+        this.foundationSpecs = builder.foundation.build();
+    }
+
+    public static HouseBuilder builder() {
+        return new HouseBuilder();
     }
 
     @Override
@@ -56,55 +60,60 @@ public class House {
     }
 
     public static class HouseBuilder {
-        private final WallMaterial walls;
-        private FloorCount floors = FloorCount.BUNGALOW;
-        private boolean hasGarage = false;
-        private boolean hasSwimmingPool = false;
-        private RoofType roofType = RoofType.FLAT;
-        private final String address;
-        private boolean isSafe = true;
-        private FoundationStrategy strategy;
+        private WallMaterial walls;
+        private FloorCount floors;
+        private boolean hasGarage;
+        private boolean hasSwimmingPool;
+        private RoofType roofType;
+        private String address;
+        private boolean isSafe;
+        private FoundationStrategy foundation;
 
-        public HouseBuilder(WallMaterial walls, String address) {
-            this.walls = walls;
+        private HouseBuilder() {
+        }
+
+        public HouseBuilder walls(WallMaterial wallMaterial) {
+            this.walls = wallMaterial;
+            return this;
+        }
+
+        public HouseBuilder address(String address) {
             this.address = address;
-        }
-
-        public HouseBuilder setFloors(FloorCount floors) {
-            this.floors = floors;
             return this;
         }
 
-        public HouseBuilder addGarage() {
-            this.hasGarage = true;
+        public HouseBuilder floors(FloorCount floorCount) {
+            this.floors = floorCount;
             return this;
         }
 
-        public HouseBuilder addPool() {
-            this.hasSwimmingPool = true;
+        public HouseBuilder hasGarage(boolean hasGarage) {
+            this.hasGarage = hasGarage;
             return this;
         }
 
-        public HouseBuilder setRoof(RoofType roofType) {
+        public HouseBuilder hasSwimmingPool(boolean hasSwimmingPool) {
+            this.hasSwimmingPool = hasSwimmingPool;
+            return this;
+        }
+
+        public HouseBuilder roofType(RoofType roofType) {
             this.roofType = roofType;
             return this;
         }
 
-        public House buildHouse() {
-            return new House(this);
-        }
-
-        public HouseBuilder setSafe(boolean isSafe) {
+        public HouseBuilder isSafe(boolean isSafe) {
             this.isSafe = isSafe;
             return this;
         }
 
-        public HouseBuilder setFoundationPlan(FoundationStrategy strategy) {
-            this.strategy = strategy;
+        public HouseBuilder foundation(FoundationStrategy foundation) {
+            this.foundation = foundation;
             return this;
         }
 
-
+        public House build() {
+            return new House(this);
+        }
     }
 }
-
