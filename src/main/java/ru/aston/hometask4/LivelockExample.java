@@ -9,62 +9,44 @@ public class LivelockExample {
     private final Lock lock1 = new ReentrantLock(true);
     private final Lock lock2 = new ReentrantLock(true);
 
-    public static void main(String[] args) {
-        LivelockExample livelockExample = new LivelockExample();
+    public static void main(String[] args) throws InterruptedException {
+        LivelockExample example = new LivelockExample();
 
-        new Thread(livelockExample::operation1, "Поток 1").start();
-        new Thread(livelockExample::operation2, "Поток 2").start();
+        Thread t1 = new Thread(() -> example.doOperation(example.lock1, example.lock2), "Поток 1");
+        Thread t2 = new Thread(() -> example.doOperation(example.lock2, example.lock1), "Поток 2");
+
+        t1.start();
+        t2.start();
+
+        t1.join();
+        t2.join();
     }
 
-    public void operation1() {
+    private void doOperation(Lock primaryLock, Lock secondaryLock) {
+        String threadName = Thread.currentThread().getName();
+
         while (true) {
             try {
-                lock1.tryLock(50, TimeUnit.MILLISECONDS);
-                System.out.println("Поток 1: Захватил lock1, пытаюсь захватить lock2.");
-
-                Thread.sleep(100);
-
-                if (lock2.tryLock()) {
-                    System.out.println("Поток 1: Захватил lock2.");
-                } else {
-                    System.out.println("Поток 1: Не могу захватить lock2, освобождаю lock1.");
-                    lock1.unlock();
-                    continue;
+                if (primaryLock.tryLock(50, TimeUnit.MILLISECONDS)) {
+                    System.out.println(threadName + ": Захватил основной замок, пытаюсь захватить второй.");
+                    Thread.sleep(100);
+                    if (secondaryLock.tryLock()) {
+                        try {
+                            System.out.println(threadName + ": Оба замка захвачены. Выполняю операцию.");
+                            break;
+                        } finally {
+                            secondaryLock.unlock();
+                        }
+                    } else {
+                        System.out.println(threadName + ": Не могу захватить второй замок, освобождаю основной.");
+                        primaryLock.unlock();
+                    }
                 }
             } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+                Thread.currentThread().interrupt();
+                return;
             }
-
-            System.out.println("Поток 1: Выполняю операцию.");
-            break;
         }
-        lock2.unlock();
-        lock1.unlock();
-    }
-
-    public void operation2() {
-        while (true) {
-            try {
-                lock2.tryLock(50, TimeUnit.MILLISECONDS);
-                System.out.println("Поток 2: Захватил lock2, пытаюсь захватить lock1.");
-
-                Thread.sleep(100);
-
-                if (lock1.tryLock()) {
-                    System.out.println("Поток 2: Захватил lock1.");
-                } else {
-                    System.out.println("Поток 2: Не могу захватить lock1, освобождаю lock2.");
-                    lock2.unlock();
-                    continue;
-                }
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-
-            System.out.println("Поток 2: Выполняю операцию.");
-            break;
-        }
-        lock1.unlock();
-        lock2.unlock();
+        primaryLock.unlock();
     }
 }

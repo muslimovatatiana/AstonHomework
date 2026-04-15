@@ -7,46 +7,34 @@ public class DeadlockExample {
     private final Lock lock1 = new ReentrantLock(true);
     private final Lock lock2 = new ReentrantLock(true);
 
-    public static void main(String[] args) {
-        DeadlockExample deadlockExample = new DeadlockExample();
+    public static void main(String[] args) throws InterruptedException {
+        DeadlockExample example = new DeadlockExample();
 
-        new Thread(deadlockExample::operation1, "Поток 1").start();
-        new Thread(deadlockExample::operation2, "Поток 2").start();
+        Thread t1 = new Thread(() -> example.doOperation(example.lock1, example.lock2, "Первая операция"), "Поток 1");
+        Thread t2 = new Thread(() -> example.doOperation(example.lock2, example.lock1, "Вторая операция"), "Поток 2");
+
+        t1.start();
+        t2.start();
+
+        t1.join();
+        t2.join();
     }
 
-    public void operation1() {
-        lock1.lock();
-        System.out.println("Поток 1: lock1 захвачен, ожидаю захвата lock2...");
-
+    private void doOperation(Lock firstLock, Lock secondLock, String opName) {
+        firstLock.lock();
         try {
+            System.out.println(Thread.currentThread().getName() + ": первый замок захвачен, жду второй...");
             Thread.sleep(100);
+            secondLock.lock();
+            try {
+                System.out.println(Thread.currentThread().getName() + ": второй замок захвачен. Выполняю " + opName + " операцию.");
+            } finally {
+                secondLock.unlock();
+            }
         } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            Thread.currentThread().interrupt();
+        } finally {
+            firstLock.unlock();
         }
-
-        lock2.lock();
-        System.out.println("Поток 1: lock2 захвачен.");
-        System.out.println("Поток 1: Выполняю первую операцию.");
-
-        lock2.unlock();
-        lock1.unlock();
-    }
-
-    public void operation2() {
-        lock2.lock();
-        System.out.println("Поток 2: lock2 захвачен, ожидаю захвата lock1...");
-
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
-        lock1.lock();
-        System.out.println("Поток 2: lock1 захвачен.");
-        System.out.println("Поток 2: Выполняю вторую операцию.");
-
-        lock1.unlock();
-        lock2.unlock();
     }
 }

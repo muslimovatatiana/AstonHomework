@@ -7,41 +7,30 @@ public class SemaphoreSequence {
     private final Semaphore sem1 = new Semaphore(1);
     private final Semaphore sem2 = new Semaphore(0);
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         SemaphoreSequence example = new SemaphoreSequence();
 
-        new Thread(example::printOne, "Поток 1").start();
-        new Thread(example::printTwo, "Поток 2").start();
+        Thread t1 = new Thread(() -> example.runSequence(example.sem1, example.sem2, "1 "), "Поток 1");
+        Thread t2 = new Thread(() -> example.runSequence(example.sem2, example.sem1, "2 "), "Поток 2");
+
+        t1.start();
+        t2.start();
+
+        t1.join();
+        t2.join();
     }
 
-    public void printOne() {
-        while (true) {
+    private void runSequence(Semaphore currentSem, Semaphore nextSem, String textToPrint) {
+        while (!Thread.currentThread().isInterrupted()) {
             try {
-                sem1.acquire();
+                currentSem.acquire();
 
-                System.out.print("1 ");
+                System.out.print(textToPrint);
                 Thread.sleep(300);
 
-                sem2.release();
+                nextSem.release();
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
-                break;
-            }
-        }
-    }
-
-    public void printTwo() {
-        while (true) {
-            try {
-                sem2.acquire();
-
-                System.out.print("2 ");
-                Thread.sleep(300);
-
-                sem1.release();
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-                break;
             }
         }
     }
